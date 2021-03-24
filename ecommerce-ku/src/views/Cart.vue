@@ -19,7 +19,7 @@
     <div>
       <p>Total Price : Rp. <span>{{ totalPrice }}</span></p>
     </div>
-    <button class="btn btn-success">CheckOut</button>
+    <button class="btn btn-success" @click="checkout">CheckOut</button>
   </div>
 </template>
 
@@ -32,6 +32,11 @@ export default {
   methods: {
     getCart () {
       this.$store.dispatch('getCart')
+    },
+    checkout () {
+      this.carts.forEach(el => {
+        this.$store.dispatch('checkout', el)
+      })
     }
   },
   computed: {

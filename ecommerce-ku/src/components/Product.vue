@@ -1,5 +1,6 @@
 <template>
-    <div class="container">
+  <div class="container">
+    <h2>Product List</h2>
     <div class="row">
       <div class="col-3" v-for="product in products" :key="product.id">
         <ProductCard :product="product" />

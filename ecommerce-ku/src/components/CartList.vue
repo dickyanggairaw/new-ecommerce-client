@@ -36,7 +36,7 @@ export default {
     stock () {
       this.$store.dispatch('updateStock', {
         stock: this.stock,
-        id: this.cart.ProductId
+        id: this.cart.id
       })
     }
   }

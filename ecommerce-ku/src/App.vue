@@ -35,4 +35,12 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+.bottom-left-icon {
+  width: 10%;
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 18px;
+  cursor:pointer;
+}
 </style>

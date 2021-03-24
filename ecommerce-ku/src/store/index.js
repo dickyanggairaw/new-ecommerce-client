@@ -10,7 +10,8 @@ export default new Vuex.Store({
   state: {
     isLogin: false,
     products: [],
-    carts: []
+    carts: [],
+    wishlists: []
   },
   mutations: {
     isLogin (state, payload) {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     },
     getCart (state, payload) {
       state.carts = payload
+    },
+    getWishlists (state, payload) {
+      state.wishlists = payload
     }
   },
   actions: {
@@ -90,7 +94,7 @@ export default new Vuex.Store({
     deleteCart (context, payload) {
       console.log(payload)
       axios({
-        url: '/carts/' + payload.ProductId,
+        url: '/carts/' + payload.id,
         method: 'DELETE',
         headers: {
           access_token: localStorage.access_token
@@ -144,6 +148,76 @@ export default new Vuex.Store({
         .then(() => {
           swal('succes Register')
           router.push('/login')
+        })
+        .catch(err => {
+          swal('error ' + err.response.data.errors)
+        })
+    },
+    checkout (context, payload) {
+      axios({
+        url: '/checkout',
+        method: 'PUT',
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          id: payload.id,
+          ProductId: payload.ProductId,
+          stock: payload.stock,
+          stockProduct: payload.Product.stock
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          swal('Sukses buy ' + payload.Product.name)
+          context.dispatch('getCart')
+        })
+        .catch(err => {
+          swal('error ' + err.response.data.errors)
+        })
+    },
+    addWishlist (context, payload) {
+      axios({
+        url: '/wishlists/' + payload.id,
+        method: 'POST',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          swal('Success add wishlist product ' + payload.name)
+        })
+        .catch(err => {
+          swal('error ' + err.response.data.errors)
+        })
+    },
+    getWishlist (context) {
+      axios({
+        url: '/wishlists',
+        method: 'GET',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          context.commit('getWishlists', data)
+        })
+        .catch(err => {
+          swal('error ' + err.response.data.errors)
+        })
+    },
+    deleteWishlist (context, payload) {
+      console.log(payload)
+      axios({
+        url: '/wishlists/' + payload.id,
+        method: 'DELETE',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(() => {
+          swal('successfuly delete wishlist ' + payload.Product.name)
+          context.dispatch('getWishlist')
         })
         .catch(err => {
           swal('error ' + err.response.data.errors)

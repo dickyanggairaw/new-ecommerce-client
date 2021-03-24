@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Register</h1>
+    <h2>Register</h2>
     <form>
       <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
@@ -37,6 +37,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  form{
+    max-width: 300px;
+    margin: 0 auto;
+  }
 </style>

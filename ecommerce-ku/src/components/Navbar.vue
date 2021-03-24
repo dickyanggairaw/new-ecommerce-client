@@ -7,6 +7,7 @@
       </a>
     </div>
     <div>
+      <a href="" @click.prevent="wishlist" v-if="isLoginUser"><i class="fas fa-heart" style="height: 30px; width: 30px; color: white;"></i></a>
       <a href="" @click.prevent="cart" v-if="isLoginUser"><i class="fas fa-shopping-cart" style="height: 30px; width: 30px; color: white;"></i></a>
       <button class="btn text-light" type="button" @click="login" v-if="!isLoginUser">Login</button>
       <button class="btn text-light" type="button" @click="register" v-if="!isLoginUser">Register</button>
@@ -35,6 +36,9 @@ export default {
     },
     logout () {
       this.$store.dispatch('logout')
+    },
+    wishlist () {
+      this.$router.push('/wishlists')
     }
   },
   computed: {
