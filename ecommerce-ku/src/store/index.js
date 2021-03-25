@@ -11,7 +11,8 @@ export default new Vuex.Store({
     isLogin: false,
     products: [],
     carts: [],
-    wishlists: []
+    wishlists: [],
+    histories: []
   },
   mutations: {
     isLogin (state, payload) {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
     },
     getWishlists (state, payload) {
       state.wishlists = payload
+    },
+    getHistories (state, payload) {
+      state.histories = payload
     }
   },
   actions: {
@@ -164,7 +168,10 @@ export default new Vuex.Store({
           id: payload.id,
           ProductId: payload.ProductId,
           stock: payload.stock,
-          stockProduct: payload.Product.stock
+          stockProduct: payload.Product.stock,
+          name: payload.Product.name,
+          image_url: payload.Product.image_url,
+          price: payload.Product.price
         }
       })
         .then(({ data }) => {
@@ -221,6 +228,21 @@ export default new Vuex.Store({
         })
         .catch(err => {
           swal('error ' + err.response.data.errors)
+        })
+    },
+    getHistories (context) {
+      axios({
+        url: '/histories',
+        method: 'GET',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          context.commit('getHistories', data)
+        })
+        .catch(err => {
+          swal(err.response.data.errors)
         })
     }
   },
