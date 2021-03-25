@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <h1 v-if="!isLogin">Home Ini loh</h1>
-    <Product v-if="isLogin" />
+    <h2>Selamat datang di Ecommerce Ku</h2>
+    <Product />
   </div>
 </template>
 
@@ -13,11 +13,6 @@ export default {
   name: 'Home',
   components: {
     Product
-  },
-  computed: {
-    isLogin () {
-      return this.$store.state.isLogin
-    }
   }
 }
 </script>
